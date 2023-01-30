@@ -34,6 +34,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="130dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@color/purple_200"
+        android:textSize="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animationView" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="84dp"
@@ -54,15 +71,17 @@
         android:id="@+id/choronometer"
         android:layout_width="220dp"
         android:layout_height="0dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginBottom="505dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="650dp"
         android:gravity="center"
         android:textColor="@color/purple_200"
         android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -78,34 +97,11 @@
         app:srcCompat="@drawable/ic_baseline_smoking_rooms_24" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="92dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="300dp"
-        android:onClick="decrease"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_replay_24" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="89dp"
-        android:onClick="sifir"
-        android:text="RESET"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/choronometer" />
-
-    <ImageView
         android:id="@+id/imageView4"
         android:layout_width="80dp"
         android:layout_height="70dp"
-        android:layout_marginTop="300dp"
         android:layout_marginEnd="250dp"
+        android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,11 +113,24 @@
         android:layout_width="80dp"
         android:layout_height="70dp"
         android:layout_marginStart="250dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cigarettes" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animationView"
+        app:layout_constraintVertical_bias="0.555"
+        app:srcCompat="@drawable/yesterday" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

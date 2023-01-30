@@ -18,6 +18,7 @@ import androidx.core.os.HandlerCompat.postDelayed
 import androidx.work.*
 import com.airbnb.lottie.LottieDrawable
 import com.ee.cigarette.databinding.ActivityMainBinding
+import java.util.Calendar
 import java.util.concurrent.TimeUnit
 import kotlin.math.min
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     var frame = 0.0f
     var isPlay = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -45,7 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         //skor değerini kaydediyoruz telefona
         sheredpreferences = this.getSharedPreferences("com.ee.cigarette", Context.MODE_PRIVATE)
+
+        resetScoreEveryDay()
+
         val skoredatabase = sheredpreferences.getInt("skor",0)
+
+
+
         //sigara animasyonunu kaldığı yerden devam etmesini sağlıyoruz
         val framedatabase:Float = sheredpreferences.getFloat("framme",0.0f)
         frame = framedatabase
@@ -54,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             binding.animationView.resumeAnimation()
             binding.animationView.setMaxProgress(frame)
         }
-
 
         //ilk açtığımızda son skor değerini yazıyoruz ekrana
         score = skoredatabase
@@ -65,11 +72,12 @@ class MainActivity : AppCompatActivity() {
             cigarattePack(skoredatabase)
         }
 
-        workrequeest()
+
 
     }
 
-    fun workrequeest(){
+    /*
+     fun workrequeest(){
         val constraint = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
             .setRequiresCharging(false)
@@ -82,6 +90,9 @@ class MainActivity : AppCompatActivity() {
             .build()
         WorkManager.getInstance(this).enqueueUniquePeriodicWork("worker",ExistingPeriodicWorkPolicy.KEEP,work)
     }
+
+     */
+
     //kronometre durdur
     fun StopTimer(view: View){
         var cho = binding.choronometer
@@ -109,18 +120,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun sifir(view: View){
-        AlertDialog.Builder(this).setTitle("Are you sure reset ?").setMessage("It is an irreversible process..").setPositiveButton("yes"){dialog,which->
+    fun sifir(){
             sheredpreferences.edit().putInt("skor",0).apply()
             sheredpreferences.edit().putFloat("framme",0f).apply()
             finish()
             startActivity(intent)
             overridePendingTransition(R.anim.slide_left,R.anim.slide_right)
-            Toast.makeText(this, "score reset", Toast.LENGTH_SHORT).show()
-        }.setNegativeButton("No"){dialog,wdfs->
-            Toast.makeText(this, "no changing", Toast.LENGTH_SHORT).show()
-
-        }.show()
+            Toast.makeText(this, "New Day", Toast.LENGTH_SHORT).show()
     }
 
 //Sigara sayısını arttır
@@ -128,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         score++
         sheredpreferences.edit().putInt("skor",score).apply()
         binding.textView.text = "$score"
+    skor_bildirim(score)
     cigarattePack(score)
 
         open = true
@@ -144,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Sigara sayısını azalt
-    fun decrease(view: View){
+    /*fun decrease(view: View){
         if(score >0) {
             score--
             sheredpreferences.edit().putInt("skor", score).apply()
@@ -157,6 +164,8 @@ class MainActivity : AppCompatActivity() {
         close = true
         animationLoop()
     }
+
+     */
 
     fun animationLoop(){
 
@@ -192,6 +201,23 @@ class MainActivity : AppCompatActivity() {
         }else if (name >= 40){
             binding.imageView4.visibility = View.VISIBLE
             binding.imageView5.visibility = View.VISIBLE
+        }
+    }
+
+    fun resetScoreEveryDay(){
+        val calendar = Calendar.getInstance()
+        var thisDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        var lastDay = sheredpreferences.getInt("day",0)
+
+        var pastScore = sheredpreferences.getInt("pastScore",0)
+        println("$lastDay")
+        println("$pastScore geçmiş skor")
+        if(lastDay != thisDay){
+            sheredpreferences.edit().putInt("day",thisDay).apply()
+            sheredpreferences.edit().putInt("pastScore",score).apply()
+            binding.textView3.text = "$pastScore"
+            sifir()
         }
     }
 
