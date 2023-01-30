@@ -24,8 +24,8 @@ class workmanager(val context: Context, workerParams: WorkerParameters) : Worker
 
     override fun doWork(): Result {
         val skooor = inputData.getInt("skorbildir",0)
-        println(skooor)
-        showNotification(skooor)
+        println("$skooor workmanager")
+        //showNotification(skooor)
         return Result.success()
 
     }

@@ -1,4 +1,4 @@
-package com.ee.cigarette
+    package com.ee.cigarette
 
 import android.animation.ValueAnimator
 import android.app.ProgressDialog.show
@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.os.SystemClock
 import android.transition.Visibility
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.HandlerCompat.postDelayed
 import androidx.work.*
 import com.airbnb.lottie.LottieDrawable
 import com.ee.cigarette.databinding.ActivityMainBinding
@@ -38,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        binding.imageView4.visibility = View.INVISIBLE
+        binding.imageView5.visibility = View.INVISIBLE
+
         //skor değerini kaydediyoruz telefona
         sheredpreferences = this.getSharedPreferences("com.ee.cigarette", Context.MODE_PRIVATE)
         val skoredatabase = sheredpreferences.getInt("skor",0)
@@ -57,7 +62,9 @@ class MainActivity : AppCompatActivity() {
             binding.textView.text = "0"
         }else{
             binding.textView.text = "$skoredatabase"
+            cigarattePack(skoredatabase)
         }
+
         workrequeest()
 
     }
@@ -68,15 +75,12 @@ class MainActivity : AppCompatActivity() {
             .setRequiresCharging(false)
             .build()
 
-        val work  = PeriodicWorkRequestBuilder<workmanager>(24,TimeUnit.HOURS)
+        val work  = PeriodicWorkRequestBuilder<workmanager>(15,TimeUnit.MINUTES)
             .setConstraints(constraint)
-            .setInputData(skor_bildirim())
+            .setInputData(skor_bildirim(score))
             .addTag("worker")
             .build()
-
-        WorkManager.getInstance(this).enqueue(work)
-
-
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork("worker",ExistingPeriodicWorkPolicy.KEEP,work)
     }
     //kronometre durdur
     fun StopTimer(view: View){
@@ -107,10 +111,12 @@ class MainActivity : AppCompatActivity() {
 
     fun sifir(view: View){
         AlertDialog.Builder(this).setTitle("Are you sure reset ?").setMessage("It is an irreversible process..").setPositiveButton("yes"){dialog,which->
-            Toast.makeText(this, "score reset", Toast.LENGTH_SHORT).show()
             sheredpreferences.edit().putInt("skor",0).apply()
             sheredpreferences.edit().putFloat("framme",0f).apply()
             finish()
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_left,R.anim.slide_right)
+            Toast.makeText(this, "score reset", Toast.LENGTH_SHORT).show()
         }.setNegativeButton("No"){dialog,wdfs->
             Toast.makeText(this, "no changing", Toast.LENGTH_SHORT).show()
 
@@ -122,8 +128,8 @@ class MainActivity : AppCompatActivity() {
         score++
         sheredpreferences.edit().putInt("skor",score).apply()
         binding.textView.text = "$score"
+    cigarattePack(score)
 
-        skor_bildirim()
         open = true
         animationLoop()
         if(score % 20 == 0){
@@ -131,9 +137,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun skor_bildirim(): Data {
-        val mydata = Data.Builder().putInt("skorbildir",score).build()
-        println(mydata)
+    fun skor_bildirim(skr:Int): Data {
+        val mydata = Data.Builder().putInt("skorbildir",skr).build()
+        println("$mydata Main activity")
         return mydata
     }
 
@@ -143,8 +149,8 @@ class MainActivity : AppCompatActivity() {
             score--
             sheredpreferences.edit().putInt("skor", score).apply()
             binding.textView.text = "$score"
+            cigarattePack(score)
 
-            skor_bildirim()
         }else
             Toast.makeText(this, "Do you believe that ? ", Toast.LENGTH_SHORT).show()
         //Belki..??
@@ -176,7 +182,18 @@ class MainActivity : AppCompatActivity() {
         sheredpreferences.edit().putFloat("framme", frame).apply()
     }
 
-
+    fun cigarattePack(name:Int){
+        if(name < 20){
+            binding.imageView4.visibility = View.INVISIBLE
+            binding.imageView5.visibility = View.INVISIBLE
+        }else if(name in 20..39){
+            binding.imageView4.visibility = View.VISIBLE
+            binding.imageView5.visibility = View.INVISIBLE
+        }else if (name >= 40){
+            binding.imageView4.visibility = View.VISIBLE
+            binding.imageView5.visibility = View.VISIBLE
+        }
+    }
 
 }
 
