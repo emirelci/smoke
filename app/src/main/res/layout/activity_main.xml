@@ -14,8 +14,10 @@
         android:onClick="increase"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53"
         app:layout_constraintWidth_percent="0.7"
         app:lottie_rawRes="@raw/anim" />
 
@@ -61,17 +63,17 @@
         android:onClick="StartTimer"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.314"
+        app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.818"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_baseline_smoke_free_24" />
 
     <Chronometer
         android:id="@+id/choronometer"
         android:layout_width="220dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="650dp"
         android:gravity="center"
         android:textColor="@color/purple_200"
@@ -92,8 +94,10 @@
         android:onClick="StopTimer"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.621"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
         app:srcCompat="@drawable/ic_baseline_smoking_rooms_24" />
 
     <ImageView
@@ -132,5 +136,22 @@
         app:layout_constraintTop_toBottomOf="@+id/animationView"
         app:layout_constraintVertical_bias="0.555"
         app:srcCompat="@drawable/yesterday" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="650dp"
+        android:foregroundGravity="center"
+        android:onClick="info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/choronometer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.432"
+        app:srcCompat="@drawable/ic_baseline_info_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

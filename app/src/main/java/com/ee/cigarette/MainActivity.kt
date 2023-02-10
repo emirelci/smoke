@@ -28,12 +28,14 @@ private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sheredpreferences:SharedPreferences
+
     var score:Int = 0
     var open:Boolean = false
     var close:Boolean = false
     var reverseFrame = 0.0f
     var frame = 0.0f
     var isPlay = false
+    var pastScore:Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +50,18 @@ class MainActivity : AppCompatActivity() {
         //skor değerini kaydediyoruz telefona
         sheredpreferences = this.getSharedPreferences("com.ee.cigarette", Context.MODE_PRIVATE)
 
-        resetScoreEveryDay()
+
 
         val skoredatabase = sheredpreferences.getInt("skor",0)
+        score = skoredatabase
+        resetScoreEveryDay()
 
+        if(score == 0 ){
+            binding.textView.text = "0"
+        }else{
+            binding.textView.text = "$score"
+            cigarattePack(score)
+        }
 
 
         //sigara animasyonunu kaldığı yerden devam etmesini sağlıyoruz
@@ -64,13 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //ilk açtığımızda son skor değerini yazıyoruz ekrana
-        score = skoredatabase
-        if(skoredatabase == 0 ){
-            binding.textView.text = "0"
-        }else{
-            binding.textView.text = "$skoredatabase"
-            cigarattePack(skoredatabase)
-        }
+
 
 
 
@@ -121,11 +125,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sifir(){
-            sheredpreferences.edit().putInt("skor",0).apply()
-            sheredpreferences.edit().putFloat("framme",0f).apply()
-            finish()
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_left,R.anim.slide_right)
+            score = 0
+            frame = 0f
+            sheredpreferences.edit().putInt("skor",score).apply()
+            sheredpreferences.edit().putFloat("framme",frame).apply()
             Toast.makeText(this, "New Day", Toast.LENGTH_SHORT).show()
     }
 
@@ -134,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         score++
         sheredpreferences.edit().putInt("skor",score).apply()
         binding.textView.text = "$score"
-    skor_bildirim(score)
+
     cigarattePack(score)
 
         open = true
@@ -144,11 +147,13 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun skor_bildirim(skr:Int): Data {
+   /* fun skor_bildirim(skr:Int): Data {
         val mydata = Data.Builder().putInt("skorbildir",skr).build()
         println("$mydata Main activity")
         return mydata
     }
+
+    */
 
     //Sigara sayısını azalt
     /*fun decrease(view: View){
@@ -207,19 +212,28 @@ class MainActivity : AppCompatActivity() {
     fun resetScoreEveryDay(){
         val calendar = Calendar.getInstance()
         var thisDay = calendar.get(Calendar.DAY_OF_MONTH)
-
         var lastDay = sheredpreferences.getInt("day",0)
+        val pastScore = sheredpreferences.getInt("pastScore",0)
+        binding.textView3.text = "$pastScore"
 
-        var pastScore = sheredpreferences.getInt("pastScore",0)
-        println("$lastDay")
         println("$pastScore geçmiş skor")
         if(lastDay != thisDay){
             sheredpreferences.edit().putInt("day",thisDay).apply()
             sheredpreferences.edit().putInt("pastScore",score).apply()
-            binding.textView3.text = "$pastScore"
+            binding.textView3.text = "$score"
+            println("$pastScore geçmiş skor")
             sifir()
         }
     }
 
+    fun info(view: View){
+        val view = View.inflate(this@MainActivity,R.layout.dialog_view,null)
+        val builder = AlertDialog.Builder(this).setView(view)
+        val dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+
+    }
 }
 

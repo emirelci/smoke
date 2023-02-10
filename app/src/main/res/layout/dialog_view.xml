@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/li"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_linear_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal"
+            android:text="-Chronometer-"
+            android:textColor="@color/white"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="calculate how long you have smoked"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="-Score-"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="calculate how many cigarettes you smoke in a day"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="-Past Score-"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp"
+            android:gravity="center_horizontal"
+            android:text="calculates how many cigarettes you smoked yesterday"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200" />
+
+
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_circle_layout"
+        android:src="@drawable/ic_baseline_info_24"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/li"
+        app:layout_constraintEnd_toEndOf="@+id/li"
+        app:layout_constraintStart_toStartOf="@+id/li"
+        app:layout_constraintTop_toTopOf="@+id/li"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
